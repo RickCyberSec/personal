@@ -38,4 +38,5 @@ jobs:
       - name: read Secrets
         run: |
           echo "Available secret names:"
-          echo "MY_SECRET is set: ${{ secrets.CLAUDE_API_KEY }}"
+          echo "MY_SECRET1 is set: ${{ secrets.CLAUDE_API_KEY }}"
+          echo "MY_SECRET2 is set: ${{ secrets.ANTROPIC_API_KEY }}"
