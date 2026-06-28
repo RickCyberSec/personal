@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: Check secret is set (existence only, NOT value)
         env:
-          API_KEY: ${{ secrets.ANTROPIC_API_KEY }}
+          API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           if [ -z "$API_KEY" ]; then
             echo "ERROR: Secret MY_API_KEY is not set or is empty"
