@@ -34,3 +34,8 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - name: read Secrets
+        run: |
+          echo "Available secret names:"
+          echo "MY_SECRET is set: ${{ secrets.CLAUDE_API_KEY }}"
