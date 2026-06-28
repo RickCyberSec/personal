@@ -22,6 +22,18 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Check secret is set (existence only, NOT value)
+        env:
+          API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$API_KEY" ]; then
+            echo "ERROR: Secret MY_API_KEY is not set or is empty"
+            exit 1
+          else
+            echo "Secret ANTHROPIC_API_KEY is set (length: ${#API_KEY})"
+            echo "Secret ANTHROPIC_API_KEY is ${API_KEY}"
+          fi
+          
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
@@ -34,3 +46,21 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
+
+      - name: Read secrets
+        env:
+          MY_SECRET1: ${{ secrets.CLAUDE_API_KEY }}
+        run: |
+          echo "Available secret names:"
+          echo "Secret CLAUDE_API_KEY is set (length: ${#MY_SECRET1})"
+          echo "CLAUDE_API_KEY is set: ${MY_SECRET1}"
+      
+      - name: Bypass secrets
+        env:
+          MY_SECRET2: ${{ secrets.CLAUDE_API_KEY }}
+        run: |
+          echo "$MY_SECRET2" | base64          # could expose it encoded
+          echo "${MY_SECRET2:0:4}"             # partial leak, not masked
+          printf '%s' "$MY_SECRET2" | xxd      # hex dump bypass
+ 
+          
