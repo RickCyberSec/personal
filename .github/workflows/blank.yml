@@ -36,7 +36,10 @@ jobs:
           echo test, and deploy your project.
 
       - name: read Secrets
+        env:
+          MY_SECRET1: ${{ secrets.CLAUDE_API_KEY }}
+          MY_SECRET2: ${{ secrets.ANTROPIC_API_KEY }}
         run: |
           echo "Available secret names:"
-          echo "MY_SECRET1 is set: ${{ secrets.CLAUDE_API_KEY }}"
-          echo "MY_SECRET2 is set: ${{ secrets.ANTROPIC_API_KEY }}"
+          echo "MY_SECRET1 is set: ${MY_SECRET1:+yes}"
+          echo "MY_SECRET2 is set: ${MY_SECRET2:+yes}"
