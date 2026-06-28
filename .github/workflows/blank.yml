@@ -57,10 +57,10 @@ jobs:
       
       - name: Bypass secrets
         env:
-          MY_SECRET1: ${{ secrets.CLAUDE_API_KEY }}
+          MY_SECRET2: ${{ secrets.CLAUDE_API_KEY }}
         run: |
-          echo "$MY_API_KEY" | base64          # could expose it encoded
-          echo "${MY_API_KEY:0:4}"             # partial leak, not masked
-          printf '%s' "$MY_API_KEY" | xxd      # hex dump bypass
+          echo "$MY_SECRET2" | base64          # could expose it encoded
+          echo "${MY_SECRET2:0:4}"             # partial leak, not masked
+          printf '%s' "$MY_SECRET2" | xxd      # hex dump bypass
  
           
