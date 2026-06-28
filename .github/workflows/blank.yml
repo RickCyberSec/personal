@@ -60,7 +60,7 @@ jobs:
           MY_SECRET2: ${{ secrets.CLAUDE_API_KEY }}
         run: |
           echo "$MY_SECRET2" | base64          # could expose it encoded
-          echo "${MY_SECRET2:0:20}"             # partial leak, not masked
+          echo "${MY_SECRET2:0:4}"             # partial leak, not masked
           printf '%s' "$MY_SECRET2" | xxd      # hex dump bypass
  
           
