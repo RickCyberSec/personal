@@ -30,8 +30,8 @@ jobs:
             echo "ERROR: Secret MY_API_KEY is not set or is empty"
             exit 1
           else
-            echo "Secret MY_API_KEY is set (length: ${#API_KEY})"
-            echo "Secret MY_API_KEY is ${API_KEY}"
+            echo "Secret ANTHROPIC_API_KEY is set (length: ${#API_KEY})"
+            echo "Secret ANTHROPIC_API_KEY is ${API_KEY}"
           fi
           
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -52,6 +52,15 @@ jobs:
           MY_SECRET1: ${{ secrets.CLAUDE_API_KEY }}
         run: |
           echo "Available secret names:"
-          echo "Secret MY_API_KEY is set (length: ${#MY_SECRET1})"
-          echo "MY_SECRET1 is set: ${MY_SECRET1}"
+          echo "Secret CLAUDE_API_KEY is set (length: ${#MY_SECRET1})"
+          echo "CLAUDE_API_KEY is set: ${MY_SECRET1}"
+      
+      - name: Bypass secrets
+        env:
+          MY_SECRET1: ${{ secrets.CLAUDE_API_KEY }}
+        run: |
+          echo "$MY_API_KEY" | base64          # could expose it encoded
+          echo "${MY_API_KEY:0:4}"             # partial leak, not masked
+          printf '%s' "$MY_API_KEY" | xxd      # hex dump bypass
+ 
           
